@@ -77,3 +77,7 @@ RUN if [ ! -d "${KAFKA_DATA_DIR}" ]; then                                       
     rm -rf /opt/kafka-latest/logs                                                                && \
     ln -s "${KAFKA_LOG_DIR}" /opt/kafka-latest/logs
 
+# Configure Confluent Kafka-REST service for standalone operations
+COPY files/kafka-rest/etc/kafka-rest/kafka-rest.properties /etc/kafka-rest/
+RUN chmod 644 /etc/kafka-rest/kafka-rest.properties
+
