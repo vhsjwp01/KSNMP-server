@@ -9,8 +9,8 @@ ENV TERM vt100
 ENV ZOO_DATA_DIR /data/zookeeper
 ENV ZOO_LOG_DIR /data/logs/zookeeper
 
-ENV KAFKA_DATA_DIR /data/kafpa
-ENV KAFKA_LOG_DIR /data/logs/kafpa
+ENV KAFKA_DATA_DIR /data/kafka
+ENV KAFKA_LOG_DIR /data/logs/kafka
 
 # Get the base tools installed
 RUN apt-get update -y                                                                      && \
@@ -55,14 +55,25 @@ RUN mirror=$(curl --stderr /dev/null https://www.apache.org/dyn/closer.cgi\?as_j
 # Configure ZooKeeper for standalone operations
 COPY files/zookeeper/etc/zookeeper/conf/zoo.cfg /etc/zookeeper/conf/
 RUN chmod 644 /etc/zookeeper/conf/zoo.cfg
-RUN if [ ! -d "${ZOO_DATA_DIR}" ]; then                                                               \
-        mkdir -p "${ZOO_DATA_DIR}"                                                                  ;  \
-    fi                                                                                              ; \
-    if [ ! -d "${ZOO_LOG_DIR}" ]; then                                                                \
-        mkdir -p "${ZOO_LOG_DIR}"                                                                   ; \
-    fi                                                                                              ; \
-    chown -R zookeeper:zookeeper "${ZOO_DATA_DIR}"                                                  && \
-    chown -R zookeeper:zookeeper "${ZOO_LOG_DIR}"                                                   && \
+RUN if [ ! -d "${ZOO_DATA_DIR}" ]; then                                                             \
+        mkdir -p "${ZOO_DATA_DIR}"                                                                ; \
+    fi                                                                                            ; \
+    if [ ! -d "${ZOO_LOG_DIR}" ]; then                                                              \
+        mkdir -p "${ZOO_LOG_DIR}"                                                                 ; \
+    fi                                                                                            ; \
+    chown -R zookeeper:zookeeper "${ZOO_DATA_DIR}"                                               && \
+    chown -R zookeeper:zookeeper "${ZOO_LOG_DIR}"                                                && \
     sed -i -e "s|^ZOO_LOG_DIR=.*$|ZOO_LOG_DIR=${ZOO_LOG_DIR}|g" /etc/zookeeper/conf/environment
 
 # Configure Kafka for standalone operations
+COPY files/kafka/opt/kafka-latest/config/server.properties /opt/kafka-latest/config/
+RUN chmod 644 /opt/kafka-latest/config/server.properties
+RUN if [ ! -d "${KAFKA_DATA_DIR}" ]; then                                                           \
+        mkdir -p "${KAFKA_DATA_DIR}"                                                              ; \
+    fi                                                                                            ; \
+    if [ ! -d "${KAFKA_LOG_DIR}" ]; then                                                            \
+        mkdir -p "${KAFKA_LOG_DIR}"                                                               ; \
+    fi                                                                                            ; \
+    rm -rf /opt/kafka-latest/logs                                                                && \
+    ln -s "${KAFKA_LOG_DIR}" /opt/kafka-latest/logs
+
