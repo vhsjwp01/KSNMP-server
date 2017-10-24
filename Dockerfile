@@ -81,3 +81,12 @@ RUN if [ ! -d "${KAFKA_DATA_DIR}" ]; then                                       
 COPY files/kafka-rest/etc/kafka-rest/kafka-rest.properties /etc/kafka-rest/
 RUN chmod 644 /etc/kafka-rest/kafka-rest.properties
 
+# Configure SNMP for standalone operations
+COPY files/snmp/etc/snmp/* /etc/snmp/
+COPY files/snmp/etc/default/* /etc/default/
+COPY files/snmp/usr/local/sbin/* /usr/local/sbin
+
+# Configure syslog-ng for standalone operations
+COPY files/syslog-ng/etc/syslog-ng/* /etc/syslog-ng/
+
+# Configure runit for service choreography
