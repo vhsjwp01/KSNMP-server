@@ -83,8 +83,9 @@ COPY files/snmp/usr/local/sbin/* /usr/local/sbin
 COPY files/syslog-ng/etc/syslog-ng/* /etc/syslog-ng/
 
 # Configure runit for service choreography
-RUN for run_dir in 10-zookeeper 20-kafka 30-snmptrapd 40-snmpd 50-syslog-ng ; do   \
-        mkdir -p "/etc/service/${run_dir}"                                       ; \
+RUN rm -rf /etc/service/*                                                        && \
+    for run_dir in 10-zookeeper 20-kafka 30-snmptrapd 40-snmpd 50-syslog-ng ; do    \
+        mkdir -p "/etc/service/${run_dir}"                                        ; \
     done
 COPY files/runit/etc/service/10-zookeeper/* /etc/service/10-zookeeper/
 COPY files/runit/etc/service/20-kafka/*     /etc/service/20-kafka/

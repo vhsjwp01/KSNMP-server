@@ -23,7 +23,13 @@ if [ -e "${SYSLOG_NG_CONF}" -a -e "${SYSLOG_NG_SCL_CONF}" ]; then
 fi
 
 if [ -x "${SYSLOG_NG_EXE}" ]; then
-    command="${SYSLOG_NG_EXE} -f ${SYSLOG_NG_CONF} -F"
+    SYSLOG_NG_VERSION=$(${SYSLOG_NG_EXE} --version | egrep "^syslog-ng" | awk '{print $NF}' | sed -e 's?[()]??g' | awk -F'.' '{print $1 "." $2}')
+
+    if [ "${SYSLOG_NG_VERSION}" != "" ]; then
+        sed -i -e "s|::SYSLOG_NG_VERSION::|${SYSLOG_NG_VERSION}|g" "${SYSLOG_NG_CONF}"
+        command="${SYSLOG_NG_EXE} --no-caps -f ${SYSLOG_NG_CONF} -F"
+    fi
+
 fi
 
 if [ "${command}" != "" ]; then
