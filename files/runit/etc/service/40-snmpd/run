@@ -1,0 +1,18 @@
+#!/bin/bash
+#set -x
+
+SNMPD_CONFIG="/etc/snmp/snmpd.conf"
+SNMPD_ENV="/etc/default/snmpd"
+SNMPD_EXE="/etc/sbin/snmpd"
+
+if [ -e "${SNMPD_ENV}" ]; then
+    . "${SNMPD_ENV}"
+fi
+
+if [ -x "${SNMPD_EXE}" ]; then
+    command="${SNMPD_EXE} -c ${SNMPD_CONFIG} ${SNMPDOPTS} -f"
+fi
+
+if [ "${command}" != "" ]; then
+    eval exec "${command}"
+fi

@@ -1,0 +1,22 @@
+#!/bin/bash
+#set -x
+
+SNMPTRAPD_CONFIG="/etc/snmp/snmptrapd.conf"
+SNMPTRAPD_ENV="/etc/default/snmptrapd"
+SNMPTRAPD_EXE="/etc/sbin/snmptrapd"
+
+if [ ! -d "${SNMPTRAPD_LOG_DIR}" ]; then
+    mkdir -p "${SNMPTRAPD_LOG_DIR}"
+fi
+
+if [ -e "${SNMPTRAPD_ENV}" ]; then
+    . "${SNMPTRAPD_ENV}"
+fi
+
+if [ -x "${SNMPTRAPD_EXE}" ]; then
+    command="${SNMPTRAPD_EXE} -c ${SNMPTRAPD_CONFIG} ${TRAPDOPTS} -f"
+fi
+
+if [ "${command}" != "" ]; then
+    eval exec "${command}"
+fi

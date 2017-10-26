@@ -1,0 +1,20 @@
+#!/bin/bash
+#set -x
+
+kafka_exe="/opt/kafka-latest/bin/kafka-server-start.sh"
+
+if [ ! -d "${KAFKA_DATA_DIR}" ]; then
+    mkdir -p "${KAFKA_DATA_DIR}"
+fi
+
+if [ ! -d "${KAFKA_LOG_DIR}" ]; then
+    mkdir -p "${KAFKA_LOG_DIR}"
+fi                                            
+
+if [ -x "${kafka_exe}" ]; then
+    command="${kafka_exe} >> ${KAFKA_LOG_DIR}/kafka_runtime.log 2>&1"
+fi
+
+if [ "${command}" != "" ]; then
+    eval exec "${command}"
+fi

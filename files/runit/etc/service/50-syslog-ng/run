@@ -1,0 +1,31 @@
+#!/bin/bash
+#set -x
+
+SYSLOG_NG_CONF="/etc/syslog-ng/syslog-ng.conf"
+SYSLOG_NG_SCL_CONF="/etc/default/snmpd"
+SYSLOG_NG_EXE="/usr/sbin/syslog-ng"
+
+if [ -e "${SYSLOG_NG_CONF}" -a -e "${SYSLOG_NG_SCL_CONF}" ]; then
+    JVM_LIBRARY_PATH=$(dirname $(find /usr/lib/ -depth -type f -iname "libjvm.so"))
+
+    if [ "${JVM_LIBRARY_PATH}" != "" ]; then
+        export LD_LIBRARY_PATH="/lib:/usr/lib:/usr/local/lib:${JVM_LIBRARY_PATH}"
+    fi
+
+    SYSLOG_NG_JAVA_MODULES_PATH=$(find /usr/lib -depth -type d -name "java-modules" | egrep "syslog\-ng")
+    KAFKA_JAR_PATH=$(find /usr/share -depth -type d -iname "kafka" | egrep "java")
+
+    if [ "${SYSLOG_NG_JAVA_MODULES_PATH}" != "" -a "${KAFKA_JAR_PATH}" != "" ]; then
+        sed -i -e "s|::SYSLOG_NG_JAVA_MODULES_PATH::|${SYSLOG_NG_JAVA_MODULES_PATH}|g" "${SYSLOG_NG_CONF}"
+        sed -i -e "s|::KAFKA_JAR_PATH::|${KAFKA_JAR_PATH}|g" "${SYSLOG_NG_CONF}"
+    fi
+
+fi
+
+if [ -x "${SYSLOG_NG_EXE}" ]; then
+    command="${SYSLOG_NG_EXE} -f ${SYSLOG_NG_CONF} -F"
+fi
+
+if [ "${command}" != "" ]; then
+    eval exec "${command}"
+fi
