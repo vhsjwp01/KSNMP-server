@@ -1,0 +1,16 @@
+#!/bin/bash
+#set -x
+
+SNMP_PERFMON_EXE="/usr/local/sbin/snmp_perfmon.sh"
+
+if [ "${SLEEP_INTERVAL}" = "" ]; then
+    let SLEEP_INTERVAL=60
+fi
+
+if [ -x "${SNMP_PERFMON_EXE}" ]; then
+    command="${SNMP_PERFMON_EXE} ${SLEEP_INTERVAL}"
+fi
+
+if [ "${command}" != "" ]; then
+    eval exec "${command}"
+fi

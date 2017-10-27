@@ -3,7 +3,7 @@
 
 SNMPD_CONFIG="/etc/snmp/snmpd.conf"
 SNMPD_ENV="/etc/default/snmpd"
-SNMPD_EXE="/etc/sbin/snmpd"
+SNMPD_EXE="/usr/sbin/snmpd"
 
 if [ -e "${SNMPD_ENV}" ]; then
     . "${SNMPD_ENV}"

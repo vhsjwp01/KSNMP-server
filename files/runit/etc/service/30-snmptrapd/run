@@ -3,7 +3,7 @@
 
 SNMPTRAPD_CONFIG="/etc/snmp/snmptrapd.conf"
 SNMPTRAPD_ENV="/etc/default/snmptrapd"
-SNMPTRAPD_EXE="/etc/sbin/snmptrapd"
+SNMPTRAPD_EXE="/usr/sbin/snmptrapd"
 
 if [ ! -d "${SNMPTRAPD_LOG_DIR}" ]; then
     mkdir -p "${SNMPTRAPD_LOG_DIR}"

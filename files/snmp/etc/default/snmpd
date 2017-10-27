@@ -3,7 +3,7 @@
 # Don't load any MIBs by default.
 # You might comment this lines once you have the MIBs downloaded.
 export MIBS=+UCD-SNMP-MIB
-export MIBDIRS=/usr/share/snmp/mibs:/usr/share/mibs/ietf:/usr/share/mibs/iana
+export MIBDIRS=/usr/share/snmp/mibs:/usr/share/snmp/mibs/ietf:/usr/share/snmp/mibs/iana
 
 # snmpd control (yes means start daemon).
 SNMPDRUN=yes

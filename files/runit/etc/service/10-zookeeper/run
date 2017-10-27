@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -x
 
-zk_exe="/usr/share/zookeeper/bin/zkServer.sh"
+ZK_EXE="/usr/share/zookeeper/bin/zkServer.sh"
 
 if [ ! -d "${ZOO_DATA_DIR}" ]; then
     mkdir -p "${ZOO_DATA_DIR}"
@@ -14,11 +14,11 @@ fi
 chown -R zookeeper:zookeeper "${ZOO_DATA_DIR}"
 chown -R zookeeper:zookeeper "${ZOO_LOG_DIR}"
 
-if [ -x "${zk_exe}" ]; then
-    command="${zk_exe} start-foreground"
+if [ -x "${ZK_EXE}" ]; then
+    command="${ZK_EXE} start-foreground"
 fi
 
-if [ "${command}" = "" ]; then
+if [ "${command}" != "" ]; then
     eval exec "${command}"
 fi
 

@@ -1,0 +1,19 @@
+#!/bin/bash
+#set -x
+
+KAFKA_REST_LOG_DIR="/data/logs/kafka-rest"
+KAFKA_REST_LOG_FILE="kafka-rest-runtime.log"
+KAFKA_REST_PROPERTIES="/etc/kafka-rest/kafka-rest.properties"
+KAFKA_REST_EXE="/usr/bin/kafka-rest-start"
+
+if [ ! -d "${KAFKA_REST_LOG_DIR}" ]; then
+    mkdir -p "${KAFKA_REST_LOG_DIR}"
+fi
+
+if [ -x "${KAFKA_REST_EXE}" ]; then
+    command="${KAFKA_REST_EXE} ${KAFKA_REST_PROPERTIES} >> ${KAFKA_REST_LOG_DIR}/${KAFKA_REST_LOG_FILE} 2>&1"
+fi
+
+if [ "${command}" != "" ]; then
+    eval exec "${command}"
+fi

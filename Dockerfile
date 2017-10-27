@@ -17,7 +17,7 @@ ENV SNMPTRAPD_LOG_DIR /data/logs/snmp
 # Get the base tools installed
 RUN apt-get update -y                                                                      && \
     apt-get --allow-unauthenticated -o Dpkg::Options::="--force-confold" install -y           \
-            apt-file curl elinks gnupg htop iftop iotop jq libterm-readline-gnu-perl          \
+            apt-file bc curl elinks gnupg htop iftop iotop jq libterm-readline-gnu-perl       \
             lm-sensors make net-tools openjdk-8-jre-headless perl-doc runit-init snmp         \
             snmp-mibs-downloader snmpd snmptrapd software-properties-common unzip vim wget && \
     apt-get upgrade -y                                                                     && \
@@ -59,6 +59,14 @@ RUN mirror=$(curl --stderr /dev/null https://www.apache.org/dyn/closer.cgi\?as_j
     ln -s "/opt/${local_dirname}" "/opt/kafka-latest"                                      && \
     rm -rf "/tmp/${local_archive}"
 
+# Make base data and log directories
+RUN if [ ! -d /data ]; then         \
+        mkdir -p /data            ; \
+    fi                           && \
+    if [ ! -d /data/logs ]; then    \
+        mkdir -p /data/logs       ; \
+    fi
+
 # Configure ZooKeeper for standalone operations
 COPY files/zookeeper/etc/zookeeper/conf/zoo.cfg /etc/zookeeper/conf/
 RUN chmod 644 /etc/zookeeper/conf/zoo.cfg
@@ -77,18 +85,20 @@ RUN chmod 644 /etc/kafka-rest/kafka-rest.properties
 # Configure SNMP for standalone operations
 COPY files/snmp/etc/snmp/* /etc/snmp/
 COPY files/snmp/etc/default/* /etc/default/
-COPY files/snmp/usr/local/sbin/* /usr/local/sbin
+COPY files/snmp_perfmon/usr/local/sbin/* /usr/local/sbin
 
 # Configure syslog-ng for standalone operations
 COPY files/syslog-ng/etc/syslog-ng/* /etc/syslog-ng/
 
 # Configure runit for service choreography
-RUN rm -rf /etc/service/*                                                        && \
-    for run_dir in 10-zookeeper 20-kafka 30-snmptrapd 40-snmpd 50-syslog-ng ; do    \
-        mkdir -p "/etc/service/${run_dir}"                                        ; \
+RUN rm -rf /etc/service/*                                                                                      && \
+    for run_dir in 10-zookeeper 20-kafka 30-snmptrapd 40-snmpd 50-syslog-ng 60-kafka-rest 70-snmp_perfmon ; do    \
+        mkdir -p "/etc/service/${run_dir}"                                                                      ; \
     done
-COPY files/runit/etc/service/10-zookeeper/* /etc/service/10-zookeeper/
-COPY files/runit/etc/service/20-kafka/*     /etc/service/20-kafka/
-COPY files/runit/etc/service/30-snmptrapd/* /etc/service/30-snmptrapd/
-COPY files/runit/etc/service/40-snmpd/*     /etc/service/40-snmpd/
-COPY files/runit/etc/service/50-syslog-ng/* /etc/service/50-syslog-ng/
+COPY files/runit/etc/service/10-zookeeper/*    /etc/service/10-zookeeper/
+COPY files/runit/etc/service/20-kafka/*        /etc/service/20-kafka/
+COPY files/runit/etc/service/30-snmptrapd/*    /etc/service/30-snmptrapd/
+COPY files/runit/etc/service/40-snmpd/*        /etc/service/40-snmpd/
+COPY files/runit/etc/service/50-syslog-ng/*    /etc/service/50-syslog-ng/
+COPY files/runit/etc/service/60-kafka-rest/*   /etc/service/60-kafka-rest/
+COPY files/runit/etc/service/70-snmp_perfmon/* /etc/service/70-snmp_perfmon/
