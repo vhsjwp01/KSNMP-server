@@ -117,3 +117,7 @@ COPY files/runit/etc/service/40-snmpd/*        /etc/service/40-snmpd/
 COPY files/runit/etc/service/50-syslog-ng/*    /etc/service/50-syslog-ng/
 COPY files/runit/etc/service/60-kafka-rest/*   /etc/service/60-kafka-rest/
 COPY files/runit/etc/service/70-snmp_perfmon/* /etc/service/70-snmp_perfmon/
+
+EXPOSE 8082
+
+ENTRYPOINT /usr/bin/runsvdir /etc/service
