@@ -98,8 +98,8 @@ COPY files/kafka-rest/etc/kafka-rest/kafka-rest.properties /etc/kafka-rest/
 RUN chmod 644 /etc/kafka-rest/kafka-rest.properties
 
 # Configure SNMP for standalone operations
-COPY files/snmp/etc/snmp/* /etc/snmp/
-COPY files/snmp/etc/default/* /etc/default/
+COPY files/snmp/etc/snmp/*               /etc/snmp/
+COPY files/snmp/etc/default/*            /etc/default/
 COPY files/snmp_perfmon/usr/local/sbin/* /usr/local/sbin
 
 # Configure syslog-ng for standalone operations
