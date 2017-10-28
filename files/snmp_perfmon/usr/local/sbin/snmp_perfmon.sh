@@ -138,7 +138,7 @@ if [ "${my_snmpget}" != "" -a "${my_snmptrap}" != "" ]; then
 
         for my_OID in ${OID_LIST} ; do
             output=$(${my_snmpget} ${snmp_get_auth_string} localhost ${my_OID})
-            #echo "${output}"
+            echo "${output}"
 
             if [ "${output}" != "" ]; then
                 mib_attribute=$(echo "${output}" | awk '{print $1}')

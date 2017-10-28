@@ -1,9 +1,12 @@
 #!/bin/bash
 #set -x
+PATH="/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+TERM="vt100"
+export TERM PATH
 
-KAFKA_LOG_FILE="kafka_runtime.log"
+PATH="/opt/kafka-latest/bin:${PATH}"
 KAFKA_CONFIG_FILE="/opt/kafka-latest/config/server.properties"
-KAFKA_EXE="/opt/kafka-latest/bin/kafka-server-start.sh"
+KAFKA_EXE=$(which kafka-server-start.sh 2> /dev/null)
 
 if [ ! -d "${KAFKA_DATA_DIR}" ]; then
     mkdir -p "${KAFKA_DATA_DIR}"
@@ -14,6 +17,7 @@ if [ ! -d "${KAFKA_LOG_DIR}" ]; then
 fi                                            
 
 if [ -x "${KAFKA_EXE}" ]; then
+    sed -i -e "s|::KAFKA_DATA_DIR::|${KAFKA_DATA_DIR}|g" "${KAFKA_CONFIG_FILE}"
     command="${KAFKA_EXE} ${KAFKA_CONFIG_FILE} >> ${KAFKA_LOG_DIR}/${KAFKA_LOG_FILE} 2>&1"
 fi
 

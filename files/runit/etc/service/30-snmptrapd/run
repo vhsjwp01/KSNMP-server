@@ -1,20 +1,31 @@
 #!/bin/bash
 #set -x
+PATH="/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+TERM="vt100"
+export TERM PATH
 
 SNMPTRAPD_CONFIG="/etc/snmp/snmptrapd.conf"
 SNMPTRAPD_ENV="/etc/default/snmptrapd"
-SNMPTRAPD_EXE="/usr/sbin/snmptrapd"
+SNMPTRAPD_EXE=$(which snmptrapd 2> /dev/null)
+
+if [ ! -d "${SNMPTRAP_LOG_DIR}" ]; then
+    mkdir -p "${SNMPTRAP_LOG_DIR}"
+fi
 
 if [ ! -d "${SNMPTRAPD_LOG_DIR}" ]; then
     mkdir -p "${SNMPTRAPD_LOG_DIR}"
 fi
 
 if [ -e "${SNMPTRAPD_ENV}" ]; then
+    sed -i -e "s|::SNMPTRAP_LOG_DIR::|${SNMPTRAP_LOG_DIR}|g" "${SNMPTRAPD_ENV}"     && \
+    sed -i -e "s|::SNMPTRAP_LOG_FILE::|${SNMPTRAP_LOG_FILE}|g" "${SNMPTRAPD_ENV}"   && \
+    sed -i -e "s|::SNMPTRAPD_LOG_DIR::|${SNMPTRAPD_LOG_DIR}|g" "${SNMPTRAPD_ENV}"   && \
+    sed -i -e "s|::SNMPTRAPD_LOG_FILE::|${SNMPTRAPD_LOG_FILE}|g" "${SNMPTRAPD_ENV}" && \
     . "${SNMPTRAPD_ENV}"
 fi
 
 if [ -x "${SNMPTRAPD_EXE}" ]; then
-    command="${SNMPTRAPD_EXE} -c ${SNMPTRAPD_CONFIG} ${TRAPDOPTS} -f"
+    command="${SNMPTRAPD_EXE} -c ${SNMPTRAPD_CONFIG} ${TRAPDOPTS} -f >> ${SNMPTRAPD_LOG_DIR}/${SNMPTRAPD_LOG_FILE} 2>&1"
 fi
 
 if [ "${command}" != "" ]; then

@@ -1,9 +1,16 @@
 #!/bin/bash
 #set -x
+PATH="/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+TERM="vt100"
+export TERM PATH
 
 SYSLOG_NG_CONF="/etc/syslog-ng/syslog-ng.conf"
 SYSLOG_NG_SCL_CONF="/etc/default/snmpd"
-SYSLOG_NG_EXE="/usr/sbin/syslog-ng"
+SYSLOG_NG_EXE=$(which syslog-ng 2> /dev/null)
+
+if [ ! -d "${SYSLOG_NG_LOG_DIR}" ]; then
+    mkdir -p "${SYSLOG_NG_LOG_DIR}"
+fi
 
 if [ -e "${SYSLOG_NG_CONF}" -a -e "${SYSLOG_NG_SCL_CONF}" ]; then
     JVM_LIBRARY_PATH=$(dirname $(find /usr/lib/ -depth -type f -iname "libjvm.so"))
@@ -16,6 +23,9 @@ if [ -e "${SYSLOG_NG_CONF}" -a -e "${SYSLOG_NG_SCL_CONF}" ]; then
     KAFKA_JAR_PATH=$(find /usr/share -depth -type d -iname "kafka" | egrep "java")
 
     if [ "${SYSLOG_NG_JAVA_MODULES_PATH}" != "" -a "${KAFKA_JAR_PATH}" != "" ]; then
+        sed -i -e "s|::SNMPTRAP_LOG_DIR::|${SNMPTRAP_LOG_DIR}|g" "${SYSLOG_NG_CONF}"
+        sed -i -e "s|::SNMPTRAP_LOG_FILE::|${SNMPTRAP_LOG_FILE}|g" "${SYSLOG_NG_CONF}"
+        sed -i -e "s|::SNMPTRAP_JSON_FILE::|${SNMPTRAP_JSON_FILE}|g" "${SYSLOG_NG_CONF}"
         sed -i -e "s|::SYSLOG_NG_JAVA_MODULES_PATH::|${SYSLOG_NG_JAVA_MODULES_PATH}|g" "${SYSLOG_NG_CONF}"
         sed -i -e "s|::KAFKA_JAR_PATH::|${KAFKA_JAR_PATH}|g" "${SYSLOG_NG_CONF}"
     fi
@@ -27,7 +37,7 @@ if [ -x "${SYSLOG_NG_EXE}" ]; then
 
     if [ "${SYSLOG_NG_VERSION}" != "" ]; then
         sed -i -e "s|::SYSLOG_NG_VERSION::|${SYSLOG_NG_VERSION}|g" "${SYSLOG_NG_CONF}"
-        command="${SYSLOG_NG_EXE} --no-caps -f ${SYSLOG_NG_CONF} -F"
+        command="${SYSLOG_NG_EXE} --no-caps -f ${SYSLOG_NG_CONF} -F >> ${SYSLOG_NG_LOG_DIR}/${SYSLOG_NG_LOG_FILE} 2>&1"
     fi
 
 fi

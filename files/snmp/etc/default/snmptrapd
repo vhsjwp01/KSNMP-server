@@ -8,4 +8,4 @@ TRAPDRUN=yes
 # snmptrapd options (use syslog).
 #TRAPDOPTS='-Lsd -p /run/snmptrapd.pid'
 #TRAPDOPTS='-Ls 10 -Lf /data/logs/snmp/snmptrapd.log -x 0.0.0.0'
-TRAPDOPTS='-A -Lf /data/logs/snmp/snmptrapd.log -x 127.0.0.1'
+TRAPDOPTS='-A -Lf ::SNMPTRAP_LOG_DIR::/::SNMPTRAP_LOG_FILE:: -x 127.0.0.1'

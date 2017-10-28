@@ -1,16 +1,25 @@
 #!/bin/bash
 #set -x
+PATH="/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+TERM="vt100"
+export TERM PATH
 
 SNMPD_CONFIG="/etc/snmp/snmpd.conf"
 SNMPD_ENV="/etc/default/snmpd"
-SNMPD_EXE="/usr/sbin/snmpd"
+SNMPD_EXE=$(which snmpd 2> /dev/null)
+
+if [ ! -d "${SNMPD_LOG_DIR}" ]; then
+    mkdir -p "${SNMPD_LOG_DIR}"
+fi
 
 if [ -e "${SNMPD_ENV}" ]; then
     . "${SNMPD_ENV}"
 fi
 
 if [ -x "${SNMPD_EXE}" ]; then
-    command="${SNMPD_EXE} -c ${SNMPD_CONFIG} ${SNMPDOPTS} -f"
+    #command="${SNMPD_EXE} -c ${SNMPD_CONFIG} ${SNMPDOPTS} -f"
+    #command="${SNMPD_EXE} ${SNMPDOPTS} -f >> ${SNMPD_LOG_DIR}/${SNMPD_LOG_FILE} 2>&1"
+    command="${SNMPD_EXE} -f >> ${SNMPD_LOG_DIR}/${SNMPD_LOG_FILE} 2>&1"
 fi
 
 if [ "${command}" != "" ]; then

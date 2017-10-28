@@ -1,10 +1,11 @@
 #!/bin/bash
 #set -x
+PATH="/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+TERM="vt100"
+export TERM PATH
 
-KAFKA_REST_LOG_DIR="/data/logs/kafka-rest"
-KAFKA_REST_LOG_FILE="kafka-rest-runtime.log"
 KAFKA_REST_PROPERTIES="/etc/kafka-rest/kafka-rest.properties"
-KAFKA_REST_EXE="/usr/bin/kafka-rest-start"
+KAFKA_REST_EXE=$(which kafka-rest-start 2> /dev/null)
 
 if [ ! -d "${KAFKA_REST_LOG_DIR}" ]; then
     mkdir -p "${KAFKA_REST_LOG_DIR}"

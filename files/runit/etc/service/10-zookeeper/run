@@ -1,21 +1,30 @@
 #!/bin/bash
 #set -x
+PATH="/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+TERM="vt100"
+export TERM PATH
 
-ZK_EXE="/usr/share/zookeeper/bin/zkServer.sh"
+PATH="/usr/share/zookeeper/bin:${PATH}"
+ZK_CONF_FILE="/etc/zookeeper/conf/zoo.cfg"
+ZK_ENV_FILE="/etc/zookeeper/conf/environment"
+ZK_EXE=$(which zkServer.sh 2> /dev/null)
 
-if [ ! -d "${ZOO_DATA_DIR}" ]; then
-    mkdir -p "${ZOO_DATA_DIR}"
+if [ ! -d "${ZK_DATA_DIR}" ]; then
+    mkdir -p "${ZK_DATA_DIR}"
 fi
 
-if [ ! -d "${ZOO_LOG_DIR}" ]; then
-    mkdir -p "${ZOO_LOG_DIR}"
+if [ ! -d "${ZK_LOG_DIR}" ]; then
+    mkdir -p "${ZK_LOG_DIR}"
 fi
 
-chown -R zookeeper:zookeeper "${ZOO_DATA_DIR}"
-chown -R zookeeper:zookeeper "${ZOO_LOG_DIR}"
+chown -R zookeeper:zookeeper "${ZK_DATA_DIR}"
+chown -R zookeeper:zookeeper "${ZK_LOG_DIR}"
 
 if [ -x "${ZK_EXE}" ]; then
-    command="${ZK_EXE} start-foreground"
+    sed -i -e "s|::ZK_DATA_DIR::|${ZK_DATA_DIR}|g" "${ZK_CONF_FILE}"
+    sed -i -e "s|::ZK_LOG_DIR::|${ZK_LOG_DIR}|g" "${ZK_CONF_FILE}"
+    sed -i -e "s|^ZOO_LOG_DIR=.*$|ZOO_LOG_DIR=${ZK_LOG_DIR}|g" "${ZK_ENV_FILE}"
+    command="${ZK_EXE} start-foreground >> ${ZK_LOG_DIR}/${ZK_LOG_FILE} 2>&1"
 fi
 
 if [ "${command}" != "" ]; then

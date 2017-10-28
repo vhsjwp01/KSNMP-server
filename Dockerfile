@@ -6,13 +6,27 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ENV TERM vt100
 
-ENV ZOO_DATA_DIR /data/zookeeper
-ENV ZOO_LOG_DIR /data/logs/zookeeper
+ENV KAFKA_DATA_DIR        /data/kafka
+ENV ZK_DATA_DIR           /data/zookeeper
 
-ENV KAFKA_DATA_DIR /data/kafka
-ENV KAFKA_LOG_DIR /data/logs/kafka
+ENV KAFKA_LOG_DIR         /data/logs/kafka
+ENV KAFKA_REST_LOG_DIR    /data/logs/kafka-rest
+ENV SNMP_PERFMON_LOG_DIR  /data/logs/snmp-perfmon
+ENV SNMPD_LOG_DIR         /data/logs/snmpd
+ENV SNMPTRAP_LOG_DIR      /data/logs/snmp
+ENV SNMPTRAPD_LOG_DIR     /data/logs/snmptrapd
+ENV SYSLOG_NG_LOG_DIR     /data/logs/syslog-ng
+ENV ZK_LOG_DIR            /data/logs/zookeeper
 
-ENV SNMPTRAPD_LOG_DIR /data/logs/snmp
+ENV KAFKA_LOG_FILE        kafka_runtime.log
+ENV KAFKA_REST_LOG_FILE   kafka-rest_runtime.log
+ENV SNMP_PERFMON_LOG_FILE snmp-perfmon_runtime.log
+ENV SNMPD_LOG_FILE        snmpd_runtime.log
+ENV SNMPTRAP_JSON_FILE    snmptrapd_json.log
+ENV SNMPTRAP_LOG_FILE     snmptrapd.log
+ENV SNMPTRAPD_LOG_FILE    snmptrapd_runtime.log
+ENV SYSLOG_NG_LOG_FILE    syslog-ng_runtime.log
+ENV ZK_LOG_FILE           zookeeper_runtime.log
 
 # Get the base tools installed
 RUN apt-get update -y                                                                      && \
@@ -25,9 +39,11 @@ RUN apt-get update -y                                                           
     apt-file update
 
 # Install the latest deb source for syslog-ng
-RUN wget -qO - http://download.opensuse.org/repositories/home:/laszlo_budai:/syslog-ng/xUbuntu_17.04/Release.key | apt-key add -                     && \
-    echo "deb http://download.opensuse.org/repositories/home:/laszlo_budai:/syslog-ng/xUbuntu_17.04 ./" > /etc/apt/sources.list.d/syslog-ng-obs.list && \
-    apt-get update -y                                                                                                                                && \
+RUN wget -qO - http://download.opensuse.org/repositories/home:/laszlo_budai:/syslog-ng/xUbuntu_17.04/Release.key    \
+        | apt-key add -                                                                                          && \
+    echo "deb http://download.opensuse.org/repositories/home:/laszlo_budai:/syslog-ng/xUbuntu_17.04 ./" >           \
+        /etc/apt/sources.list.d/syslog-ng-obs.list                                                               && \
+    apt-get update -y                                                                                            && \
     apt-get install syslog-ng-core syslog-ng-mod-json syslog-ng-mod-kafka syslog-ng-mod-snmptrapd-parser -y
 
 # Install Confluent REST API for Kafka
@@ -47,11 +63,11 @@ RUN apt-get install -y zookeeper zookeeper-bin zookeeperd
 #       that goes with it.  It then downloads the archive, unpacks it, then removes
 #       the archive for housekeeping
 RUN mirror=$(curl --stderr /dev/null https://www.apache.org/dyn/closer.cgi\?as_json\=1 |      \
-    jq -r '.preferred')                                                                    && \
+        jq -r '.preferred')                                                                && \
     latest_kafka=$(elinks -verbose 1 -dump 1 "${mirror}kafka/?C=M;O=A" |                      \
-    egrep "${mirror}kafka/" | awk '{print $NF}' | tail -1)                                 && \
+        egrep "${mirror}kafka/" | awk '{print $NF}' | tail -1)                             && \
     url=$(elinks -verbose 1 -dump 1 "${latest_kafka}?C=M;O=A" |                               \
-    egrep "${latest_kafka}kafka_.*\.tgz$" | awk '{print $NF}' | tail -1)                   && \
+        egrep "${latest_kafka}kafka_.*\.tgz$" | awk '{print $NF}' | tail -1)               && \
     local_archive=$(echo "${url}" | awk -F'/' '{print $NF}')                               && \
     local_dirname=$(echo "${local_archive}" | sed -e 's/\.tgz$//g')                        && \
     wget -q "${url}" -O "/tmp/${local_archive}"                                            && \
@@ -70,7 +86,6 @@ RUN if [ ! -d /data ]; then         \
 # Configure ZooKeeper for standalone operations
 COPY files/zookeeper/etc/zookeeper/conf/zoo.cfg /etc/zookeeper/conf/
 RUN chmod 644 /etc/zookeeper/conf/zoo.cfg
-RUN sed -i -e "s|^ZOO_LOG_DIR=.*$|ZOO_LOG_DIR=${ZOO_LOG_DIR}|g" /etc/zookeeper/conf/environment
 
 # Configure Kafka for standalone operations
 COPY files/kafka/opt/kafka-latest/config/server.properties /opt/kafka-latest/config/

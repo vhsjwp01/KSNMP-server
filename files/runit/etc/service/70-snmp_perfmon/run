@@ -1,14 +1,21 @@
 #!/bin/bash
 #set -x
+PATH="/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+TERM="vt100"
+export TERM PATH
 
-SNMP_PERFMON_EXE="/usr/local/sbin/snmp_perfmon.sh"
+SNMP_PERFMON_EXE=$(which snmp_perfmon.sh 2> /dev/null)
+
+if [ ! -d "${SNMP_PERFMON_LOG_DIR}" ]; then
+    mkdir -p "${SNMP_PERFMON_LOG_DIR}"
+fi
 
 if [ "${SLEEP_INTERVAL}" = "" ]; then
     let SLEEP_INTERVAL=60
 fi
 
 if [ -x "${SNMP_PERFMON_EXE}" ]; then
-    command="${SNMP_PERFMON_EXE} ${SLEEP_INTERVAL}"
+    command="${SNMP_PERFMON_EXE} ${SLEEP_INTERVAL} >> ${SNMP_PERFMON_LOG_DIR}/${SNMP_PERFMON_LOG_FILE} 2>&1"
 fi
 
 if [ "${command}" != "" ]; then
