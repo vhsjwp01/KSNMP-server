@@ -19,7 +19,7 @@ This Dockerfile uses the following open source tools:
 6) Kafka-REST
     - Provides a RESTful API for kafka message topic consumption
 7) SNMP-PerMon
-    - A custom written BASH script that reads in a list of SNMP OIDs and them queries SNMPd
+    - A custom written BASH script that reads in a list of SNMP OIDs and then queries SNMPd
 8) Runit
     - An alternative init system replacement used inside the docker container to coordinate service resiliency
 
@@ -32,8 +32,8 @@ How to use this Docker Project
     - docker run -d -p 8082:8082 \<container image hash\>
     - NOTE: If you want to use persistent storage with pure docker, use this command instead:
         - docker run -d -p 8082:8082 -v \<some folder path\>:/data \<container image hash\>
-    - NOTE: If you want to tuse persistent storage with docker swarm, use this command instead:
-        - dockewr service create --name kdnmp-server -p 8082:8082 --mount src=\<some folder name\>,dst=/data \<container image hash\>
+    - NOTE: If you want to use persistent storage with docker swarm, use this command instead:
+        - docker service create --name ksnmp-server -p 8082:8082 --mount src=\<some folder name\>,dst=/data \<container image hash\>
 3) Connect to the service running at localhost:8082 using the Confluent documentation as as reference
     - https://docs.confluent.io/current/kafka-rest/docs/intro.html
     - An example script:
