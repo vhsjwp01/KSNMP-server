@@ -17,10 +17,10 @@ if [ ! -d "${SNMPTRAPD_LOG_DIR}" ]; then
 fi
 
 if [ -e "${SNMPTRAPD_ENV}" ]; then
-    sed -i -e "s|::SNMPTRAP_LOG_DIR::|${SNMPTRAP_LOG_DIR}|g" "${SNMPTRAPD_ENV}"     && \
-    sed -i -e "s|::SNMPTRAP_LOG_FILE::|${SNMPTRAP_LOG_FILE}|g" "${SNMPTRAPD_ENV}"   && \
-    sed -i -e "s|::SNMPTRAPD_LOG_DIR::|${SNMPTRAPD_LOG_DIR}|g" "${SNMPTRAPD_ENV}"   && \
-    sed -i -e "s|::SNMPTRAPD_LOG_FILE::|${SNMPTRAPD_LOG_FILE}|g" "${SNMPTRAPD_ENV}" && \
+    sed -i -e "s|::SNMPTRAP_LOG_DIR::|${SNMPTRAP_LOG_DIR}|g"     "${SNMPTRAPD_ENV}" &&
+    sed -i -e "s|::SNMPTRAP_LOG_FILE::|${SNMPTRAP_LOG_FILE}|g"   "${SNMPTRAPD_ENV}" &&
+    sed -i -e "s|::SNMPTRAPD_LOG_DIR::|${SNMPTRAPD_LOG_DIR}|g"   "${SNMPTRAPD_ENV}" &&
+    sed -i -e "s|::SNMPTRAPD_LOG_FILE::|${SNMPTRAPD_LOG_FILE}|g" "${SNMPTRAPD_ENV}" &&
     . "${SNMPTRAPD_ENV}"
 fi
 

@@ -21,9 +21,9 @@ chown -R zookeeper:zookeeper "${ZK_DATA_DIR}"
 chown -R zookeeper:zookeeper "${ZK_LOG_DIR}"
 
 if [ -x "${ZK_EXE}" ]; then
-    sed -i -e "s|::ZK_DATA_DIR::|${ZK_DATA_DIR}|g" "${ZK_CONF_FILE}"
-    sed -i -e "s|::ZK_LOG_DIR::|${ZK_LOG_DIR}|g" "${ZK_CONF_FILE}"
-    sed -i -e "s|^ZOO_LOG_DIR=.*$|ZOO_LOG_DIR=${ZK_LOG_DIR}|g" "${ZK_ENV_FILE}"
+    sed -i -e "s|::ZK_DATA_DIR::|${ZK_DATA_DIR}|g"             "${ZK_CONF_FILE}" &&
+    sed -i -e "s|::ZK_LOG_DIR::|${ZK_LOG_DIR}|g"               "${ZK_CONF_FILE}" &&
+    sed -i -e "s|^ZOO_LOG_DIR=.*$|ZOO_LOG_DIR=${ZK_LOG_DIR}|g" "${ZK_ENV_FILE}"  &&
     command="${ZK_EXE} start-foreground >> ${ZK_LOG_DIR}/${ZK_LOG_FILE} 2>&1"
 fi
 

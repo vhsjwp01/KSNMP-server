@@ -6,27 +6,34 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ENV TERM vt100
 
-ENV KAFKA_DATA_DIR        /data/kafka
-ENV ZK_DATA_DIR           /data/zookeeper
+ENV DATA_DIR                /data
+ENV KAFKA_DATA_DIR          ${DATA_DIR}/kafka
+ENV ZK_DATA_DIR             ${DATA_DIR}/zookeeper
 
-ENV KAFKA_LOG_DIR         /data/logs/kafka
-ENV KAFKA_REST_LOG_DIR    /data/logs/kafka-rest
-ENV SNMP_PERFMON_LOG_DIR  /data/logs/snmp-perfmon
-ENV SNMPD_LOG_DIR         /data/logs/snmpd
-ENV SNMPTRAP_LOG_DIR      /data/logs/snmp
-ENV SNMPTRAPD_LOG_DIR     /data/logs/snmptrapd
-ENV SYSLOG_NG_LOG_DIR     /data/logs/syslog-ng
-ENV ZK_LOG_DIR            /data/logs/zookeeper
+ENV KAFKA_LOG_DIR           ${DATA_DIR}/logs/kafka
+ENV KAFKA_REST_LOG_DIR      ${DATA_DIR}/logs/kafka-rest
+ENV SNMP_PERFMON_LOG_DIR    ${DATA_DIR}/logs/snmp-perfmon
+ENV SNMPD_LOG_DIR           ${DATA_DIR}/logs/snmpd
+ENV SNMPTRAP_LOG_DIR        ${DATA_DIR}/logs/snmp
+ENV SNMPTRAPD_LOG_DIR       ${DATA_DIR}/logs/snmptrapd
+ENV SYSLOG_NG_LOG_DIR       ${DATA_DIR}/logs/syslog-ng
+ENV ZK_LOG_DIR              ${DATA_DIR}/logs/zookeeper
 
-ENV KAFKA_LOG_FILE        kafka_runtime.log
-ENV KAFKA_REST_LOG_FILE   kafka-rest_runtime.log
-ENV SNMP_PERFMON_LOG_FILE snmp-perfmon_runtime.log
-ENV SNMPD_LOG_FILE        snmpd_runtime.log
-ENV SNMPTRAP_JSON_FILE    snmptrapd_json.log
-ENV SNMPTRAP_LOG_FILE     snmptrapd.log
-ENV SNMPTRAPD_LOG_FILE    snmptrapd_runtime.log
-ENV SYSLOG_NG_LOG_FILE    syslog-ng_runtime.log
-ENV ZK_LOG_FILE           zookeeper_runtime.log
+ENV KAFKA_LOG_FILE          kafka_runtime.log
+ENV KAFKA_REST_LOG_FILE     kafka-rest_runtime.log
+ENV SNMP_PERFMON_LOG_FILE   snmp-perfmon_runtime.log
+ENV SNMPD_LOG_FILE          snmpd_runtime.log
+ENV SNMPTRAP_JSON_FILE      snmptrapd_json.log
+ENV SNMPTRAP_LOG_FILE       snmptrapd.log
+ENV SNMPTRAPD_LOG_FILE      snmptrapd_runtime.log
+ENV SYSLOG_NG_LOG_FILE      syslog-ng_runtime.log
+ENV ZK_LOG_FILE             zookeeper_runtime.log
+
+ENV KAFKA_BROKER_ID         0
+ENV KAFKA_ZK_CONNECT        localhost:2181/SNMP
+
+ENV SYSLOG_NG_KAFKA_CONNECT localhost:9092
+ENV SYSLOG_NG_KAFKA_TOPIC   SNMP
 
 # Get the base tools installed
 RUN apt-get update -y                                                                      && \
