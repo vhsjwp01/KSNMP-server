@@ -40,31 +40,31 @@ How to use this Docker Project
         - https://github.com/corneel/SNMP-Server/blob/master/kafka-rest_config/debian_ubuntu/xenial/usr/local/bin/kafka-rest_commands.sh
 
 Configurable Runtime Variables: (defaults shown below)
-DATA_DIR                /data
-KAFKA_DATA_DIR          ${DATA_DIR}/kafka
-ZK_DATA_DIR             ${DATA_DIR}/zookeeper
+- DATA_DIR                /data
+- KAFKA_DATA_DIR          ${DATA_DIR}/kafka
+- ZK_DATA_DIR             ${DATA_DIR}/zookeeper
 
-KAFKA_LOG_DIR           ${DATA_DIR}/logs/kafka
-KAFKA_REST_LOG_DIR      ${DATA_DIR}/logs/kafka-rest
-SNMP_PERFMON_LOG_DIR    ${DATA_DIR}/logs/snmp-perfmon
-SNMPD_LOG_DIR           ${DATA_DIR}/logs/snmpd
-SNMPTRAP_LOG_DIR        ${DATA_DIR}/logs/snmp
-SNMPTRAPD_LOG_DIR       ${DATA_DIR}/logs/snmptrapd
-SYSLOG_NG_LOG_DIR       ${DATA_DIR}/logs/syslog-ng
-ZK_LOG_DIR              ${DATA_DIR}/logs/zookeeper
+- KAFKA_LOG_DIR           ${DATA_DIR}/logs/kafka
+- KAFKA_REST_LOG_DIR      ${DATA_DIR}/logs/kafka-rest
+- SNMP_PERFMON_LOG_DIR    ${DATA_DIR}/logs/snmp-perfmon
+- SNMPD_LOG_DIR           ${DATA_DIR}/logs/snmpd
+- SNMPTRAP_LOG_DIR        ${DATA_DIR}/logs/snmp
+- SNMPTRAPD_LOG_DIR       ${DATA_DIR}/logs/snmptrapd
+- SYSLOG_NG_LOG_DIR       ${DATA_DIR}/logs/syslog-ng
+- ZK_LOG_DIR              ${DATA_DIR}/logs/zookeeper
 
-KAFKA_LOG_FILE          kafka_runtime.log
-KAFKA_REST_LOG_FILE     kafka-rest_runtime.log
-SNMP_PERFMON_LOG_FILE   snmp-perfmon_runtime.log
-SNMPD_LOG_FILE          snmpd_runtime.log
-SNMPTRAP_JSON_FILE      snmptrapd_json.log
-SNMPTRAP_LOG_FILE       snmptrapd.log
-SNMPTRAPD_LOG_FILE      snmptrapd_runtime.log
-SYSLOG_NG_LOG_FILE      syslog-ng_runtime.log
-ZK_LOG_FILE             zookeeper_runtime.log
+- KAFKA_LOG_FILE          kafka_runtime.log
+- KAFKA_REST_LOG_FILE     kafka-rest_runtime.log
+- SNMP_PERFMON_LOG_FILE   snmp-perfmon_runtime.log
+- SNMPD_LOG_FILE          snmpd_runtime.log
+- SNMPTRAP_JSON_FILE      snmptrapd_json.log
+- SNMPTRAP_LOG_FILE       snmptrapd.log
+- SNMPTRAPD_LOG_FILE      snmptrapd_runtime.log
+- SYSLOG_NG_LOG_FILE      syslog-ng_runtime.log
+- ZK_LOG_FILE             zookeeper_runtime.log
 
-KAFKA_BROKER_ID         0
-KAFKA_ZK_CONNECT        localhost:2181/SNMP
+- KAFKA_BROKER_ID         0
+- KAFKA_ZK_CONNECT        localhost:2181/SNMP
 
-SYSLOG_NG_KAFKA_CONNECT localhost:9092
-SYSLOG_NG_KAFKA_TOPIC   SNMP
+- SYSLOG_NG_KAFKA_CONNECT localhost:9092
+- SYSLOG_NG_KAFKA_TOPIC   SNMP
