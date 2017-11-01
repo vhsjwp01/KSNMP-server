@@ -28,7 +28,7 @@ How to use this Docker Project
     - git clone \<this project\>
     - cd \<this project\>
     - docker build .
-        - NOTE: you can name the image using an addition build switch:
+        - NOTE: you can name the image using an addition build switch:<br>
             docker build . -t <some name>
             - NOTE: the '-t' switch stands for 'tag' and docker tags *MUST BE* lowercase
 2) Run the container
