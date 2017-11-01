@@ -33,7 +33,7 @@ How to use this Docker Project
             - NOTE: the '-t' switch stands for 'tag' and docker tags *MUST BE* lowercase
 2) Run the container
     - docker run -d -p 8082:8082 \<container image hash\> OR \<tag name\>
-        - NOTE: you can also choose to name the running instance like so:
+        - NOTE: you can also choose to name the running instance like so:<br>
             docker run -d -p 8082:8082 --name \<some name\> \<tag name\>
             - NOTE: the value of the '--name' switch *MUST BE* lowercase
         - NOTE: If you want to use persistent storage with pure docker, use this command instead:
