@@ -29,7 +29,7 @@ How to use this Docker Project
     - cd \<this project\>
     - docker build .
         - NOTE: you can name the image using an addition build switch:<br>
-            docker build . -t <some name>
+            docker build . -t \<some name\>
             - NOTE: the '-t' switch stands for 'tag' and docker tags *MUST BE* lowercase
 2) Run the container
     - docker run -d -p 8082:8082 \<container image hash\> OR \<tag name\>
