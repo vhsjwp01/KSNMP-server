@@ -28,12 +28,18 @@ How to use this Docker Project
     - git clone \<this project\>
     - cd \<this project\>
     - docker build .
+        - NOTE: you can name the image using an addition build switch:
+            docker build . -t <some name>
+            - NOTE: the '-t' switch stands for 'tag' and docker tags *MUST BE* lowercase
 2) Run the container
-    - docker run -d -p 8082:8082 \<container image hash\>
-    - NOTE: If you want to use persistent storage with pure docker, use this command instead:
-        - docker run -d -p 8082:8082 -v \<some folder path\>:/data \<container image hash\>
-    - NOTE: If you want to use persistent storage with docker swarm, use this command instead:
-        - docker service create --name ksnmp-server -p 8082:8082 --mount src=\<some folder name\>,dst=/data \<container image hash\>
+    - docker run -d -p 8082:8082 \<container image hash\> OR \<tag name\>
+        - NOTE: you can also choose to name the running instance like so:
+            docker run -d -p 8082:8082 --name \<some name\> \<tag name\>
+            - NOTE: the value of the '--name' switch *MUST BE* lowercase
+        - NOTE: If you want to use persistent storage with pure docker, use this command instead:
+            - docker run -d -p 8082:8082 -v \<some folder path\>:/data \<container image hash\>
+        - NOTE: If you want to use persistent storage with docker swarm, use this command instead:
+            - docker service create --name ksnmp-server -p 8082:8082 --mount src=\<some folder name\>,dst=/data \<container image hash\>
 3) Connect to the service running at localhost:8082 using the Confluent documentation as as reference
     - https://docs.confluent.io/current/kafka-rest/docs/intro.html
     - An example script:
