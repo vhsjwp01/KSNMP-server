@@ -30,15 +30,15 @@ This Dockerfile uses the following open source tools:
     - <tt>docker build .</tt>
         - <i><b>NOTE:</b> you can name the image using an addition build switch:</i><br>
             <tt>docker build . -t \<some name\></tt>
-            - <i><b>NOTE:</b> the '<tt>-t</tt>' switch stands for '<tt>tag</tt>' and docker tags <b>*MUST BE* lowercase</b></i>
+            - <i><b>NOTE:</b> the </i>'<tt>-t</tt>'<i> switch stands for </i>'<tt>tag</tt>'<i> and docker tags <b>*MUST BE* lowercase</b></i>
 2) Run the container
     - <tt>docker run -d -p 8082:8082 \<container image hash\> OR \<tag name\></tt>
         - <i><b>NOTE:</b> you can also choose to name the running instance like so:</i><br>
             <tt>docker run -d -p 8082:8082 --name \<some name\> \<tag name\></tt>
-            - <i><b>NOTE:</b> the value of the '<tt>--name</tt>' switch <b>*MUST BE* lowercase</b></i>
+            - <i><b>NOTE:</b> the value of the </i>'<tt>--name</tt>'<i> switch <b>*MUST BE* lowercase</b></i>
         - <i><b>NOTE:</b> If you want to use persistent storage with pure docker, use this command instead:</i><br>
             - <tt>docker run -d -p 8082:8082 -v \<some folder path\>:/data \<container image hash\></tt>
-        - <i><b>NOTE:</b> If you want to use persistent storage with docker swarm, use this command instead:</i><br>
+        - <i><b>NOTE:</b> If you want to use persistent storage with <b>docker swarm</b>, use this command instead:</i><br>
             - <tt>docker service create --name ksnmp-server -p 8082:8082 --mount src=\<some folder name\>,dst=/data \<container image hash\></tt>
 3) Connect to the service running at localhost:8082 using the Confluent documentation as as reference
     - https://docs.confluent.io/current/kafka-rest/docs/intro.html
