@@ -1,10 +1,10 @@
-WHAT:
+<b>WHAT:</b><gr>
 This Dockerfile sends JSON tokenized SNMP traps to a kafka message queue
 
-WHY:
+<b>WHY:</b><gr>
 In order to create a structured log of SNMP events in a resilient way
 
-HOW:
+<b>HOW:</b><gr>
 This Dockerfile uses the following open source tools:
 1) ZooKeeper
     - ZooKeeper is the communication backplane for Kafka brokers
@@ -23,23 +23,23 @@ This Dockerfile uses the following open source tools:
 8) Runit
     - An alternative init system replacement used inside the docker container to coordinate service resiliency
 
-How to use this Docker Project
+<b>HOW TO USE THIS DOCKER PROJECT:</b><br>
 1) Build the container:
-    - git clone \<this project\>
-    - cd \<this project\>
-    - docker build .
-        - NOTE: you can name the image using an addition build switch:<br>
-            docker build . -t \<some name\>
-            - NOTE: the '-t' switch stands for 'tag' and docker tags *MUST BE* lowercase
+    - <tt>git clone \<this project\></tt>
+    - <tt>cd \<this project\></tt>
+    - <tt>docker build .</tt>
+        - <i><b>NOTE:</b> you can name the image using an addition build switch:</i><br>
+            <tt>docker build . -t \<some name\></tt>
+            - <i><b>NOTE:</b> the '<tt>-t</tt>' switch stands for '<tt>tag</tt>' and docker tags <b>*MUST BE* lowercase</b></i>
 2) Run the container
-    - docker run -d -p 8082:8082 \<container image hash\> OR \<tag name\>
-        - NOTE: you can also choose to name the running instance like so:<br>
-            docker run -d -p 8082:8082 --name \<some name\> \<tag name\>
-            - NOTE: the value of the '--name' switch *MUST BE* lowercase
-        - NOTE: If you want to use persistent storage with pure docker, use this command instead:
-            - docker run -d -p 8082:8082 -v \<some folder path\>:/data \<container image hash\>
-        - NOTE: If you want to use persistent storage with docker swarm, use this command instead:
-            - docker service create --name ksnmp-server -p 8082:8082 --mount src=\<some folder name\>,dst=/data \<container image hash\>
+    - <tt>docker run -d -p 8082:8082 \<container image hash\> OR \<tag name\></tt>
+        - <i><b>NOTE:</b> you can also choose to name the running instance like so:</i><br>
+            <tt>docker run -d -p 8082:8082 --name \<some name\> \<tag name\></tt>
+            - <i><b>NOTE:</b> the value of the '<tt>--name</tt>' switch <b>*MUST BE* lowercase</b></i>
+        - <i><b>NOTE:</b> If you want to use persistent storage with pure docker, use this command instead:</i><br>
+            - <tt>docker run -d -p 8082:8082 -v \<some folder path\>:/data \<container image hash\></tt>
+        - <i><b>NOTE:</b> If you want to use persistent storage with docker swarm, use this command instead:</i><br>
+            - <tt>docker service create --name ksnmp-server -p 8082:8082 --mount src=\<some folder name\>,dst=/data \<container image hash\></tt>
 3) Connect to the service running at localhost:8082 using the Confluent documentation as as reference
     - https://docs.confluent.io/current/kafka-rest/docs/intro.html
     - An example script:
