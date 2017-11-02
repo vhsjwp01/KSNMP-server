@@ -1,10 +1,10 @@
-<b>WHAT:</b><gr>
+<b>WHAT:</b><br>
 This Dockerfile sends JSON tokenized SNMP traps to a kafka message queue
 
-<b>WHY:</b><gr>
+<b>WHY:</b><br>
 In order to create a structured log of SNMP events in a resilient way
 
-<b>HOW:</b><gr>
+<b>HOW:</b><br>
 This Dockerfile uses the following open source tools:
 1) ZooKeeper
     - ZooKeeper is the communication backplane for Kafka brokers
