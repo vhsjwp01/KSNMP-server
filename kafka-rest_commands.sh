@@ -86,7 +86,7 @@ if [ ${exit_code} -eq ${SUCCESS} ]; then
     # Iterate 10 times
     let counter=0
     
-    while [ ${counter} -lt 2 ]; do
+    while [ ${counter} -lt 10 ]; do
         sleep 12
         clear
         eval ${this_consumer_fetch} | jq ".[]"
