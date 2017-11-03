@@ -43,7 +43,8 @@ This Dockerfile uses the following open source tools:
 3) Connect to the service running at localhost:8082 using the Confluent documentation as as reference
     - https://docs.confluent.io/current/kafka-rest/docs/intro.html
     - An example script:
-        - https://github.com/corneel/SNMP-Server/blob/master/kafka-rest_config/debian_ubuntu/xenial/usr/local/bin/kafka-rest_commands.sh
+        - https://github.com/vhsjwp01/KSNMP-server/blob/master/kafka-rest_commands.sh
+        - <b>MAKE SURE TO HAVE '<tt>curl>/tt>' AND '<tt>jq</tt>' INSTALLED BEFORE RUNNING THIS SCRIPT</b>
 
 Configurable Runtime Variables: (defaults shown below)
 <pre>
