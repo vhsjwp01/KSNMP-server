@@ -2,9 +2,9 @@ FROM ubuntu:artful
 
 MAINTAINER Jason W. Plummer "vhsjwp01@gmail.com"
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND         noninteractive
 
-ENV TERM vt100
+ENV TERM                    vt100
 
 ENV DATA_DIR                /data
 ENV KAFKA_DATA_DIR          ${DATA_DIR}/kafka
