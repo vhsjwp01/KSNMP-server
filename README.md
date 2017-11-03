@@ -44,7 +44,7 @@ This Dockerfile uses the following open source tools:
     - https://docs.confluent.io/current/kafka-rest/docs/intro.html
     - An example script:
         - https://github.com/vhsjwp01/KSNMP-server/blob/master/kafka-rest_commands.sh
-        - <b>MAKE SURE TO HAVE '<tt>curl>/tt>' AND '<tt>jq</tt>' INSTALLED BEFORE RUNNING THIS SCRIPT</b>
+        - <b>MAKE SURE TO HAVE '<tt>curl</tt>' AND '<tt>jq</tt>' INSTALLED BEFORE RUNNING THIS SCRIPT</b>
 
 Configurable Runtime Variables: (defaults shown below)
 <pre>
