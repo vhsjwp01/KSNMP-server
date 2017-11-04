@@ -6,29 +6,21 @@ In order to create a structured log of SNMP events in a resilient way
 
 <b>HOW:</b><br>
 This Dockerfile uses the following open source tools:
-1) ZooKeeper
-    - ZooKeeper is the communication backplane for Kafka brokers
-2) Kafka
-    - Kafka is the message queue service
-3) SNMPTrapd
-    - SNMPTrapd listens for incoming SNMP Traps and logs them
-4) SNMPd
-    - SNMPd listens for SNMP OID requests and returns their values
-5) Syslog-NG
-    - Reads in SNMPTrapd logs, JSON tokenizes them, then sends them to kafka
-6) Kafka-REST
-    - Provides a RESTful API for kafka message topic consumption
-7) SNMP-PerMon
-    - A custom written BASH script that reads in a list of SNMP OIDs and then queries SNMPd
-8) Runit
-    - An alternative init system replacement used inside the docker container to coordinate service resiliency
+1) ZooKeeper is the communication backplane for Kafka brokers
+2) Kafka is the message queue service
+3) SNMPTrapd listens for incoming SNMP Traps and logs them
+4) SNMPd listens for SNMP OID requests and returns their values
+5) Syslog-NG reads in SNMPTrapd logs, JSON tokenizes them, then sends them to kafka
+6) Kafka-REST provides a RESTful API for kafka message topic consumption
+7) SNMP-PerMon is a custom written BASH script that reads in a list of SNMP OIDs and then queries SNMPd
+8) Runit is an alternative init system used inside the docker container to coordinate service resiliency
 
 <b>HOW TO USE THIS DOCKER PROJECT:</b><br>
 1) Build the container:
     - <tt>git clone \<this project\></tt>
     - <tt>cd \<this project\></tt>
     - <tt>docker build .</tt>
-        - <i><b>NOTE:</b> you can name the image using an addition build switch:</i><br>
+        - <i><b>NOTE:</b> you can name the image using an additional build switch:</i><br>
             <tt>docker build . -t \<some name\></tt>
             - <i><b>NOTE:</b> the </i>'<tt>-t</tt>'<i> switch stands for </i>'<tt>tag</tt>'<i> and docker tags <b>*MUST BE* lowercase</b></i>
 2) Run the container
