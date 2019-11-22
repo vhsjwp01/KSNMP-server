@@ -1,10 +1,10 @@
-## WHAT:
+### WHAT:
 This Dockerfile sends JSON tokenized SNMP traps to a kafka message queue
 
-## WHY:
+### WHY:
 In order to create a structured log of SNMP events in a resilient way
 
-## HOW:
+### HOW:
 This Dockerfile uses the following open source tools:
 1) ZooKeeper is the communication backplane for Kafka brokers
 2) Kafka is the message queue service
@@ -15,7 +15,7 @@ This Dockerfile uses the following open source tools:
 7) SNMP-PerMon is a custom written BASH script that reads in a list of SNMP OIDs and then queries SNMPd
 8) Runit is an alternative init system used inside the docker container to coordinate service resiliency
 
-### HOW TO USE THIS DOCKER PROJECT:
+#### HOW TO USE THIS DOCKER PROJECT:
 1) Build the container:
     - <tt>git clone \<this project\></tt>
     - <tt>cd \<this project\></tt>
