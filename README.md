@@ -1,10 +1,13 @@
-### [WHAT:](#the-what)
+(#the-what)
+### WHAT:
 This Dockerfile sends JSON tokenized SNMP traps to a kafka message queue
 
-### [WHY:](#the-why)
+(#the-why)
+### WHY:
 In order to create a structured log of SNMP events in a resilient way
 
-### [HOW:](#the-how)
+(#the-how)
+### HOW:
 This Dockerfile uses the following open source tools:
 1) ZooKeeper is the communication backplane for Kafka brokers
 2) Kafka is the message queue service
@@ -15,7 +18,8 @@ This Dockerfile uses the following open source tools:
 7) SNMP-PerMon is a custom written BASH script that reads in a list of SNMP OIDs and then queries SNMPd
 8) Runit is an alternative init system used inside the docker container to coordinate service resiliency
 
-#### [HOW TO USE THIS DOCKER PROJECT:](#docker-howto-use)
+(#this-docker-project)
+#### HOW TO USE THIS DOCKER PROJECT:
 1) Build the container:
     - <tt>git clone \<this project\></tt>
     - <tt>cd \<this project\></tt>
@@ -38,6 +42,7 @@ This Dockerfile uses the following open source tools:
         - https://github.com/vhsjwp01/KSNMP-server/blob/master/kafka-rest_commands.sh
         - <b>MAKE SURE TO HAVE '<tt>curl</tt>' AND '<tt>jq</tt>' INSTALLED BEFORE RUNNING THIS SCRIPT</b>
 
+(#variables)
 Configurable Runtime Variables: (defaults shown below)
 <pre>
 - DATA_DIR                /data
