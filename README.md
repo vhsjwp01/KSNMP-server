@@ -1,4 +1,4 @@
-### WHAT:
+### [WHAT:](#the-what)
 This Dockerfile sends JSON tokenized SNMP traps to a kafka message queue
 
 ### WHY:
