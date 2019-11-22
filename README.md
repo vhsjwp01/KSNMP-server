@@ -38,7 +38,8 @@ This Dockerfile uses the following open source tools:
         - https://github.com/vhsjwp01/KSNMP-server/blob/master/kafka-rest_commands.sh
         - <b>MAKE SURE TO HAVE '<tt>curl</tt>' AND '<tt>jq</tt>' INSTALLED BEFORE RUNNING THIS SCRIPT</b>
 
-[Configurable Runtime Variables:](#configurable-runtime-variables) (defaults shown below)
+[Configurable Runtime Variables:](#configurable-runtime-variables)
+(defaults shown below)
 <pre>
 - DATA_DIR                /data
 - KAFKA_DATA_DIR          ${DATA_DIR}/kafka
